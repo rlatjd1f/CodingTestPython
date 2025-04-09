@@ -14,4 +14,4 @@ for num in numbers:
     if diff in num_dict:
         res_set.add((num, diff))
 
-print(len(res_set) // 2)
+print(len(res_set) // 2) 
