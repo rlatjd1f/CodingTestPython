@@ -22,7 +22,7 @@ def dfs(num):
     print(num, end=" ")
     visited_dfs[num] = True
     for val in graph[num]:
-        if visited_dfs[val] == False:
+        if not visited_dfs[val]:
             dfs(val)
 
 
@@ -34,7 +34,7 @@ def bfs(num):
         q = queue.popleft()
         print(q, end=" ")
         for val in graph[q]:
-            if visited_bfs[val] == False:
+            if not visited_bfs[val]:
                 visited_bfs[val] = True
                 queue.append(val)
 
