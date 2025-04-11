@@ -3,43 +3,45 @@ from collections import deque
 
 input = sys.stdin.readline
 
-N, M, V = map(int, input().split())
+n, m, v = map(int, input().strip().split())
+graph = [[] for _ in range(n + 1)]
+chk_list_dfs = [False for _ in range(n + 1)]
+chk_list_bfs = [False for _ in range(n + 1)]
 
-graph = [[] for _ in range(N + 1)]
-visited_dfs = [False] * (N + 1)
-visited_bfs = [False] * (N + 1)
+bfs_res, dfs_res = [], []
 
-for _ in range(M):
-    x, y = map(int, input().split())
+for _ in range(m):
+    x, y = map(int, input().strip().split())
     graph[x].append(y)
     graph[y].append(x)
 
-for i in range(N + 1):
-    graph[i].sort()
+for k in range(len(graph)):
+    graph[k].sort()
 
 
-def dfs(num):
-    print(num, end=" ")
-    visited_dfs[num] = True
-    for val in graph[num]:
-        if not visited_dfs[val]:
-            dfs(val)
+def dfs(val):
+    chk_list_dfs[val] = True
+    dfs_res.append(str(val))
+    for value in graph[val]:
+        if not chk_list_dfs[value]:
+            dfs(value)
 
 
-def bfs(num):
+def bfs(val):
     queue = deque()
-    queue.append(num)
-    visited_bfs[num] = True
+    queue.append(val)
+
     while queue:
-        q = queue.popleft()
-        print(q, end=" ")
-        for val in graph[q]:
-            if not visited_bfs[val]:
-                visited_bfs[val] = True
-                queue.append(val)
+        val = queue.popleft()
+        chk_list_bfs[val] = True
+        bfs_res.append(str(val))
+        for value in graph[val]:
+            if not chk_list_bfs[value]:
+                chk_list_bfs[value] = True
+                queue.append(value)
 
 
-dfs(V)
-print()
-bfs(V)
-print()
+dfs(v)
+bfs(v)
+print(' '.join(dfs_res))
+print(' '.join(bfs_res))
